@@ -1,0 +1,74 @@
+{
+    "name": "echo-clothing-ext",
+    "scripts": {
+        "type-check": "tsc --noEmit --allowJs --checkJs -p jsconfig.json",
+        "lint": "eslint --ext .js src utils",
+        "build": "rollup -c rollup.config.js",
+        "dev:rel": "pnpm type-check && pnpm resources:dev && pnpm build --configBaseURL \"http://localhost:8080/\"",
+        "dev": "pnpm lint && pnpm type-check && pnpm resources:dev && pnpm build --configDebug --configBaseURL \"http://localhost:8080/\"",
+        "dev:beta": "pnpm type-check && pnpm resources:dev --type beta && pnpm build --configDebug --configBeta --configBaseURL \"http://localhost:8080/\"",
+        "changelog": "conventional-changelog -p angular -o CHANGELOG.md -r 0",
+        "changelog:stdout": "conventional-changelog -p angular",
+        "changelog:page": "node ./scripts/.changelog.js CHANGELOG.md public/changelog.html",
+        "resources:rel": "node ./scripts/.resource.js --rel",
+        "resources:dev": "node ./scripts/.resource.js --dev",
+        "serve": "http-server -p 8080 --cors public",
+        "package-props": "node ./scripts/.package-props.js",
+        "git:release": "git checkout release && git merge origin/main && git push && git checkout main"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SugarChain-Studio/echo-clothing-ext"
+    },
+    "rollupSetting": {
+        "output": "bc-cloth.js",
+        "input": "src/main.js",
+        "assets": {
+            "location": "resources",
+            "assets": [
+                "Assets",
+                "Audio",
+                "Screens"
+            ]
+        },
+        "componentDir": "src/components",
+        "loaderName": "bc-cloth.user.js",
+        "beta": {
+            "output": "bc-cloth-beta.js",
+            "loaderName": "bc-cloth-beta.user.js"
+        }
+    },
+    "displayName": "服装拓展",
+    "modFullName": "Echo的服装拓展",
+    "author": "Echo",
+    "description": "BC视觉表现的美学修正与拓展",
+    "devDependencies": {
+        "@eslint/js": "^9.22.0",
+        "@rollup/plugin-alias": "^5.1.1",
+        "@rollup/plugin-commonjs": "^28.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "@rollup/plugin-replace": "^6.0.2",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@sugarch/bc-asset-manager": "^0.3.1",
+        "@sugarch/bc-event-handler": "^0.4.0",
+        "@sugarch/bc-mod-hook-manager": "^0.2.11",
+        "@sugarch/bc-mod-types": "^0.6.0",
+        "@sugarch/bc-mod-utility": "^0.2.0",
+        "bc-stubs": "^114.0.0",
+        "bondage-club-mod-sdk": "^1.2.0",
+        "conventional-changelog-cli": "^5.0.0",
+        "copyfiles": "^2.4.1",
+        "eslint": "^9.22.0",
+        "github-markdown-css": "^5.8.1",
+        "globals": "^16.0.0",
+        "http-server": "^14.1.1",
+        "lz-string": "^1.5.0",
+        "marked": "^15.0.7",
+        "rollup": "^4.36.0",
+        "rollup-plugin-cleanup": "^3.2.1",
+        "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-import-css": "^3.5.8",
+        "typescript": "^5.8.2"
+    },
+    "packageManager": "pnpm@9.12.2"
+}
